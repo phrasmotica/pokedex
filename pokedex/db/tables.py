@@ -2116,6 +2116,20 @@ class PokemonType(TableBase):
     slot = Column(Integer, primary_key=True, nullable=False, autoincrement=False,
         doc=u"The type's slot, 1 or 2, used to sort types if there are two of them")
 
+class PokemonTypeChangelog(TableBase):
+    """History of changes to a Pokémon's types across main game versions."""
+    __tablename__ = 'pokemon_types_changelog'
+    id = Column(Integer, primary_key=True, nullable=False,
+        doc=u"A numeric ID")
+    pokemon_id = Column(Integer, ForeignKey('pokemon.id'), nullable=False, autoincrement=False,
+        doc=u"ID of the Pokémon")
+    type_id = Column(Integer, ForeignKey('types.id'), nullable=False,
+        doc=u"ID of the type")
+    slot = Column(Integer, nullable=False, autoincrement=False,
+        doc=u"The type's slot, 1 or 2, used to sort types if there are two of them")
+    changed_in_generation_id = Column(Integer, ForeignKey('generations.id'), nullable=False,
+        doc=u"The ID of the generation in which the type changed")
+
 class Region(TableBase):
     u"""Major areas of the world: Kanto, Johto, etc."""
     __tablename__ = 'regions'
